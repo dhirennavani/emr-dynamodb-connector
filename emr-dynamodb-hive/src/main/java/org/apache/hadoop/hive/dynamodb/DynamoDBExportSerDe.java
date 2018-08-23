@@ -13,11 +13,13 @@
 
 package org.apache.hadoop.hive.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -35,11 +37,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * This class is used to read the DynanmoDB backup format and allow querying individual columns from
@@ -116,8 +113,7 @@ public class DynamoDBExportSerDe extends AbstractSerDe {
         item.put(dynamoDBAttributeName, deserializedAttributeValue);
       }
 
-      DynamoDBItemWritable dynamoDBItem = new DynamoDBItemWritable();
-      dynamoDBItem.setItem(item);
+      DynamoDBItemWritable dynamoDBItem = new DynamoDBItemWritable(item);
       return dynamoDBItem;
     } else {
       throw new SerDeException(getClass().toString() + ": expects Text object!");

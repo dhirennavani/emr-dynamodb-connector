@@ -1,14 +1,14 @@
 /**
  * Copyright 2012-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file
- * except in compliance with the License. A copy of the License is located at
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except
+ * in compliance with the License. A copy of the License is located at
  *
  *     http://aws.amazon.com/apache2.0/
  *
  * or in the "LICENSE.TXT" file accompanying this file. This file is distributed on an "AS IS"
- * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under the License.
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
+ * for the specific language governing permissions and limitations under the License.
  */
 
 package org.apache.hadoop.dynamodb.read;
@@ -16,7 +16,8 @@ package org.apache.hadoop.dynamodb.read;
 import static org.apache.hadoop.dynamodb.DynamoDBUtil.createJobClient;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-
+import java.io.IOException;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.dynamodb.DynamoDBClient;
@@ -33,9 +34,6 @@ import org.apache.hadoop.dynamodb.split.DynamoDBSplit;
 import org.apache.hadoop.dynamodb.util.TimeSource;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * AbstractDynamoDBRecordReader does all the backend work for splitting up the data in DynamoDB,
@@ -130,8 +128,7 @@ public abstract class AbstractDynamoDBRecordReader<K, V> implements RecordReader
   }
 
   protected void convertDynamoDBItemToValue(Map<String, AttributeValue> item, V value) {
-    DynamoDBItemWritable ddbItem = new DynamoDBItemWritable();
-    ddbItem.setItem(item);
+    DynamoDBItemWritable ddbItem = new DynamoDBItemWritable(item);
     convertDynamoDBItemToValue(ddbItem, value);
   }
 

@@ -14,15 +14,17 @@
 package org.apache.hadoop.hive.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.dynamodb.DynamoDBClient;
 import org.apache.hadoop.dynamodb.DynamoDBConstants;
 import org.apache.hadoop.dynamodb.DynamoDBItemWritable;
-import org.apache.hadoop.dynamodb.type.DynamoDBType;
-import org.apache.hadoop.dynamodb.type.DynamoDBTypeFactory;
 import org.apache.hadoop.hive.dynamodb.shims.SerDeParametersShim;
 import org.apache.hadoop.hive.dynamodb.shims.ShimsLoader;
 import org.apache.hadoop.hive.dynamodb.type.HiveDynamoDBItemType;
@@ -41,12 +43,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 public class DynamoDBSerDe extends AbstractSerDe {
 
@@ -152,8 +148,7 @@ public class DynamoDBSerDe extends AbstractSerDe {
       }
     }
 
-    DynamoDBItemWritable itemWritable = new DynamoDBItemWritable();
-    itemWritable.setItem(item);
+    DynamoDBItemWritable itemWritable = new DynamoDBItemWritable(item);
     return itemWritable;
   }
 
